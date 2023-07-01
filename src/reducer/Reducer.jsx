@@ -1,3 +1,5 @@
+import { data as initialRecipes } from "../data/data"
+
 const reducer = (state, action) => {
 
     switch(action.type){
@@ -6,10 +8,14 @@ const reducer = (state, action) => {
         return JSON.parse(localStorage.getItem("recipes"));
 
         case 'SEARCH':
-            let initialData = JSON.parse(localStorage.getItem("recipes"));
-            const { value, type} = action.payload;
+            const savedData = JSON.parse(localStorage.getItem("recipes"));
 
-            if(!value) return JSON.parse(localStorage.getItem("recipes"));
+            let initialData = savedData ? savedData : initialRecipes;
+
+            const { value, type } = action.payload;
+
+            if(!value) return [...initialData];
+
             switch(type){
                 case 'name':
                     initialData = initialData.filter(({ title }) => title.toLowerCase().includes(value.toLowerCase()));
