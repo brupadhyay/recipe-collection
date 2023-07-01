@@ -18,6 +18,7 @@ export const Home = () => {
       <Filters />
       <h3>Your Recipes: </h3>
       <button onClick={() => setModal(true)}>Add a recipe</button>
+      {state.length === 0 && <h4>No recipe matches your search, don't fret let's give it another shot</h4> }
       <div className={styles.container}>
         {state.map(({ id, title, cuisine, recipeimage }) => (
           <div key={id} className={styles.box}>
