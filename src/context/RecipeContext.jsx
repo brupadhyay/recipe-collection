@@ -19,11 +19,20 @@ const RecipeProvider = ({ children }) => {
         })
     }
 
+
+    const applySearch = (value, type) => {
+        dispatch({
+            type: 'SEARCH',
+            payload: {value, type}
+        })
+    }
+
     return(
         <RecipeContext.Provider value={{
             state, 
             addRecipe,
-            dispatch
+            dispatch,
+            applySearch
         }}>
             {children}
         </RecipeContext.Provider>

@@ -5,6 +5,26 @@ const reducer = (state, action) => {
             localStorage.setItem("recipes", JSON.stringify([...state, action.payload]));
         return JSON.parse(localStorage.getItem("recipes"));
 
+        case 'SEARCH':
+            let initialData = JSON.parse(localStorage.getItem("recipes"));
+            const { value, type} = action.payload;
+
+            if(!value) return JSON.parse(localStorage.getItem("recipes"));
+            switch(type){
+                case 'name':
+                    initialData = initialData.filter(({ title }) => title.toLowerCase().includes(value.toLowerCase()));
+                    break;
+                
+                case 'ingredients':
+                    initialData = initialData.filter(({ ingredients }) => 
+                    ingredients.join('').toLowerCase().includes(value.toLowerCase()));
+                    break;
+
+                default: initialData = initialData.filter(({ cuisine }) => cuisine.toLowerCase().includes(value.toLowerCase()));
+                break;
+            }
+        return initialData;
+
         default: break;
     }
 }
